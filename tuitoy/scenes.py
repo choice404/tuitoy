@@ -1,60 +1,68 @@
 """
-Copyright (C) 2023 Austin "Choisauce" Choi
+Copyright (C) 2023 Austin Choi
 See end of file for extended copyright information
 """
 
 import curses
 
 class Scene:
-    def __init__(self, stdscr, name, window, entities=[]):
-        self.__stdscr = stdscr
+    # Name: __init__
+    # Parameters: (string) name
+    # Return: None
+    # Description: Constructor for the Scene object
+    def __init__(self, name):
         self.__name = name
-        self.__window = window
-        self.__entities = entities
-        self.__width = self.__window.max_width - (10 * self.__window.per_width)
-        self.__height = self.__window.max_height - 10
-        self.__x = 4 * self.__window.per_width
-        self.__y = 1
-        curses.init_pair(1, curses.COLOR_GREEN, curses.COLOR_BLACK)
+        self.__windows = []
 
-    def draw(self, stdscr):
-        horizontal = ('-' * self.__width) + '-' + '-'
+    # Name: get_name
+    # Parameters: None
+    # Return: (string) name
+    # Description: Returns the name of the scene
+    def get_name(self):
+        return self.__name
 
-        stdscr.addstr(self.__y, self.__x, horizontal)
-        stdscr.addstr(self.__y + self.__height + 1, self.__x, horizontal)
-        for i in range (self.__height):
-            stdscr.addch(self.__y + i + 1, self.__x, '|')
-            stdscr.addch(self.__y + i + 1, self.__x + self.__width + 1, '|')
+    # Name: set_name
+    # Parameters: (string) name
+    # Return: None
+    # Description: Sets the name of the scene
+    def set_name(self, name):
+        self.__name = name
 
-    def refresh(self):
-        self.__width = self.__window.max_width - (10 * self.__window.per_width)
-        self.__height = self.__window.max_height - 10
-        self.__x = 4 * self.__window.per_width
-        self.__y = 1
+    # Name: add_window
+    # Parameters: (Window) window   
+    # Return: None
+    # Description: Adds a window to the scene
+    def add_window(self, window):
+        self.__windows.append(window)
+        
+    # Name: remove_window
+    # Parameters: (Window) window
+    # Return: None
+    # Description: Removes a window from the scene
+    def remove_window(self, window):
+        self.__windows.remove(window)
 
+    # Name: render
+    # Parameters: (curses.window) stdscr
+    # Return: None
+    # Description: Renders the scene
+    def render(self, stdscr):
+        if self.__windows:
+            for window in self.__windows:
+                window.render(stdscr)
 
-class TitleScene(Scene):
-    def __init__(self, stdscr, name, window, title, entities=[]):
-        super().__init__(stdscr, name, window, entities)
-        self.__title = title.split('\n')
-        self.__title_length = len(self.__title)
-
-    def draw(self, stdscr):
-        super().draw(stdscr)
-        for i, line in enumerate(self.__title):
-            stdscr.attron(curses.color_pair(1))
-            stdscr.addstr(10 + i, (self._Scene__window.max_width - 87) //2, line)
-            stdscr.attroff(curses.color_pair(1))
-
-def main():
-  # Enter code here
-  print("scenes.py created")
-
-if __name__ == '__main__':
-   main()
+    # Name: handle_input
+    # Parameters: (int) key
+    # Return: None
+    # Description: Handles input for the scene
+    def handle_input(self, key):
+        if self.__windows:
+            for window in self.__windows:
+                window.handle_input(key)
 
 """
-Copyright (C) 2023 Austin "Choisauce" Choi
+Copyright (C) 2023 Austin Choi
+All rights reserved.
 
 Tuitoy
 

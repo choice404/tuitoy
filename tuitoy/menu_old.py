@@ -7,7 +7,7 @@ import curses
 
 class Menu:
     # Constructor for the menu object
-    def __init__(self, window, menu_map = {"init": []}, left = 'a', right = 'd'):
+    def __init__(self, window, left = 'a', right = 'd', menu_map = {"init": []}):
         self.__window = window
         self.__width = self.__window.max_width - (8 * self.__window.per_width)
         self.__height = self.__window.max_height - 1

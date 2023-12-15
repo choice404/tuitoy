@@ -12,6 +12,7 @@ class Entity:
         self.__y = y
         self.__char = char
 
+    # 
     def get_name(self):
         return self.__name
 
@@ -38,7 +39,19 @@ class Entity:
         self.__y += dy
         self.__x += dx
         self.check_collision(window)
-    
+
+    def get_x(self):
+        return self.__x
+
+    def get_y(self):
+        return self.__y
+
+    def get_stdscr(self):
+        return self.__stdscr
+
+    def get_char(self):
+        return self.__char
+
     def draw(self):
         self.__stdscr.addch(self.__y, self.__x, self.__char)
 
@@ -54,14 +67,14 @@ class Square(Shape):
         self.__length = length
         self.__text = text
 
-    def draw(self, stdscr):
+    def draw(self):
         horizontal = ('-' * self.__length) + '-' + '-'
 
-        stdscr.addstr(self._Shape__y, self._Shape__x, horizontal)
-        stdscr.addstr(self._Shape__y + self.__length + 1, self._Shape__x, horizontal)
+        super().__stdscr.addstr(super().__y, super().__x, horizontal)
+        super().__stdscr.addstr(super().__y + self.__length + 1, super().__x, horizontal)
         for i in range (self.__length):
-            stdscr.addch(self._Shape__y + i + 1, self._Shape__x, '|')
-            stdscr.addch(self._Shape__y + i + 1, self._Shape__x + self.__length + 1, '|')
+            super().__stdscr.addch(super().__y + i + 1, super().__x, '|')
+            super().__stdscr.addch(super().__y + i + 1, super().__x + self.__length + 1, '|')
 
         # super().__stdscr.addstr(super().__y, super().__x, horizontal)
         # super().__stdscr.addstr(super().__y + self.__length, super().__x, horizontal)
