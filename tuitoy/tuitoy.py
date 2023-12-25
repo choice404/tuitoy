@@ -24,6 +24,8 @@ class App:
         self.__current_scene = ""
         self.__fps = 60
         self.__show_fps = False
+        self.__border = False
+        self.__main_window = curses.newwin(0, 0, 0, 0)
         curses.curs_set(0)
 
     # Name: get_fps
@@ -46,6 +48,13 @@ class App:
     # Description: Toggles whether or not the fps is shown
     def toggle_fps(self):
         self.__show_fps = not self.__show_fps
+    
+    # Name: toggle_border
+    # Parameters: None
+    # Return: None
+    # Description: Toggles whether or not the border is shown
+    def toggle_border(self):
+        self.__border = not self.__border
 
     # Name: render
     # Parameters: None
@@ -57,20 +66,28 @@ class App:
         current_frame = 0
         while True:
             if self.__show_fps:
-                self.__stdscr.addstr(0, 0, "FPS: " + str(current_frame + 1))
+                if self.__border:
+                    self.__stdscr.addstr(1, 1, "FPS: " + str(current_frame + 1))
+                else:
+                    self.__stdscr.addstr(0, 0, "FPS: " + str(current_frame + 1))
                 current_frame = (current_frame + 1) % self.__fps
 
             if self.__windows:
                 for window in self.__windows:
                     window.render(self.__stdscr)
 
-            key = self.__stdscr.getch()
+            if self.__border:
+                self.__main_window.border()
 
+            key = self.__stdscr.getch()
             if len(self.__scenes) > 0:
                 self.__scenes[self.__current_scene].render(self.__stdscr)
                 self.__scenes[self.__current_scene].handle_input(key)
 
             self.__stdscr.refresh()
+            self.__main_window.refresh()
+            for window in self.__windows:
+                window.refresh()
 
             time.sleep(1/self.__fps)
 
@@ -113,13 +130,11 @@ class App:
 # Parameters: (curses.window) stdscr
 # Return: None
 # Description: The main function that will be wrapped by the run function to run the app
-def main(stdscr):
-    app = App(stdscr)
-    app.toggle_fps()
+def create_app(app):
     app.render()
 
 if __name__ == '__main__':
-    run(main)
+    run(create_app)
 
 """
 Copyright (C) 2023 Austin "Choisauce" Choi
