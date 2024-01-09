@@ -13,11 +13,16 @@ def run(app_func):
     curses.wrapper(app_func)
 
 class App:
-    # Name: __init__
-    # Parameters: (curses.window) stdscr
-    # Return: None
-    # Description: Constructor for the App object
     def __init__(self, stdscr):
+        """
+                Constructor for the App object
+
+                Parameters:
+                        stdscr (curses.window): The main window that is passed in from the curses.wrapper function
+                Returns:
+                        None
+                        
+        """
         self.__stdscr = stdscr
         self.__scenes = {} 
         self.__windows = []
@@ -28,39 +33,59 @@ class App:
         self.__main_window = curses.newwin(0, 0, 0, 0)
         curses.curs_set(0)
 
-    # Name: get_fps
-    # Parameters: None
-    # Return: (int) fps
-    # Description: Returns the current fps
     def get_fps(self):
+        """
+                Returns the current fps
+
+                Parameters:
+                        None
+                Returns:
+                        (int): The current fps
+        """
         return self.__fps
 
-    # Name: set_fps
-    # Parameters: (int) fps
-    # Return: None
-    # Description: Sets the current fps
     def set_fps(self, fps):
+        """
+                Sets the current fps
+
+                Parameters:
+                        fps (int): The new fps
+                Returns:
+                        None
+        """
         self.__fps = fps
 
-    # Name: toggle_fps
-    # Parameters: None
-    # Return: None
-    # Description: Toggles whether or not the fps is shown
     def toggle_fps(self):
+        """
+                Toggles whether or not the fps is shown
+
+                Parameters:
+                        None
+                Returns:
+                        None
+        """
         self.__show_fps = not self.__show_fps
     
-    # Name: toggle_border
-    # Parameters: None
-    # Return: None
-    # Description: Toggles whether or not the border is shown
     def toggle_border(self):
+        """
+                Toggles whether or not the border is shown
+
+                Parameters:
+                        None
+                Returns:
+                        None
+        """
         self.__border = not self.__border
 
-    # Name: render
-    # Parameters: None
-    # Return: None
-    # Description: Renders the app
     def render(self):
+        """
+                Renders the app
+
+                Parameters:
+                        None
+                Returns:
+                        None
+        """
         self.__stdscr.nodelay(1)
         self.__stdscr.clear()
         current_frame = 0
@@ -91,46 +116,71 @@ class App:
 
             time.sleep(1/self.__fps)
 
-    # Name: add_window
-    # Parameters: (Window) window
-    # Return: None
-    # Description: Adds a window to the list of windows that will always be rendered
     def add_window(self, window):
+        """
+                Adds a window to the list of windows that will always be rendered
+
+                Parameters:
+                        window (Window): The window to be added
+                Returns:
+                        None
+        """
         self.__windows.append(window)
 
-    # Name: remove_window
-    # Parameters: (Window) window
-    # Return: None
-    # Description: Removes a window from the list of windows that will always be rendered
     def remove_window(self, window):
+        """
+                Removes a window from the list of windows that will always be rendered
+
+                Parameters:
+                        window (Window): The window to be removed
+                Returns:
+                        None
+        """
         self.__windows.remove(window)
 
-    # Name: add_scene
-    # Parameters: (string) scene_name, (Scene) scene
-    # Return: None
-    # Description: Adds a scene to the list of scenes that can be rendered
     def append_scene(self, scene_name, scene):
+        """
+                Adds a scene to the list of scenes that can be rendered
+
+                Parameters:
+                        scene_name (string): The name of the scene
+                        scene (Scene): The scene to be added
+                Returns:
+                        None
+        """
         self.__scenes[scene_name] = scene
 
-    # Name: remove_scene
-    # Parameters: (string) scene_name
-    # Return: None
-    # Description: Removes a scene from the list of scenes that can be rendered
     def remove_scene(self, scene_name):
+        """
+                Removes a scene from the list of scenes that can be rendered
+
+                Parameters:
+                        scene_name (string): The name of the scene
+                Returns:
+                        None
+        """
         del self.__scenes[scene_name]
 
-    # Name: change_scene
-    # Parameters: (string) scene_name
-    # Return: None
-    # Description: Changes the current scene to the scene with the given name
     def change_scene(self, scene_name):
+        """
+                Changes the current scene to the scene with the given name
+
+                Parameters:
+                        scene_name (string): The name of the scene
+                Returns:
+                        None
+        """
         self.__current_scene = scene_name
 
-# Name: main
-# Parameters: (curses.window) stdscr
-# Return: None
-# Description: The main function that will be wrapped by the run function to run the app
 def create_app(app):
+    """
+            The main function that will be wrapped by the run function to run the app
+
+            Parameters:
+                    app (App): The app to be run
+            Returns:
+                    None
+    """
     app.render()
 
 if __name__ == '__main__':

@@ -11,6 +11,19 @@ class Window:
     # Returns: None
     # Description: Constructor for Window object
     def __init__(self, x=0, y=0, width=0, height=0, border=False):
+        """
+                Constructor for the Window object
+
+                Parameters:
+                        x (int): The x coordinate of the window
+                        y (int): The y coordinate of the window
+                        width (int): The width of the window
+                        height (int): The height of the window
+                        border (bool): Whether or not the window has a border
+                Returns:
+                        None
+                        
+        """
         self.__x = x
         self.__y = y
         self.__width = width
@@ -19,99 +32,151 @@ class Window:
         self.__entities = []
         self.__window = curses.newwin(self.__height, self.__width, self.__y, self.__x)
 
-    # Name: get_x
-    # Parameters: None
-    # Returns: (int) x
-    # Description: Returns the x coordinate of the window
     def get_x(self):
+        """
+                Returns the x coordinate of the window
+
+                Parameters:
+                        None
+                Returns:
+                        (int): The x coordinate of the window
+        """
         return self.__x
 
-    # Name: set_x
-    # Parameters: (int) x
-    # Returns: None
-    # Description: Sets the x coordinate of the window
     def set_x(self, x):
+        """
+                Sets the x coordinate of the window
+
+                Parameters:
+                        x (int): The new x coordinate of the window
+                Returns:
+                        None
+        """
         self.__x = x
         self.__window = curses.newwin(self.__height, self.__width, self.__y, self.__x)
 
-    # Name: get_y
-    # Parameters: None
-    # Returns: (int) y
-    # Description: Returns the y coordinate of the window
     def get_y(self):
+        """
+                Returns the y coordinate of the window
+                
+                Parameters:
+                        None
+                Returns:
+                        (int): The y coordinate of the window
+        """
         return self.__y
 
-    # Name: set_y
-    # Parameters: (int) y
-    # Returns: None
-    # Description: Sets the y coordinate of the window
     def set_y(self, y):
+        """
+                Sets the y coordinate of the window
+
+                Parameters:
+                        y (int): The new y coordinate of the window
+                Returns:
+                        None
+        """
         self.__y = y
         self.__window = curses.newwin(self.__height, self.__width, self.__y, self.__x)
 
-    # Name: get_width
-    # Parameters: None
-    # Returns: (int) width
-    # Description: Returns the width of the window
     def get_width(self):
+        """
+                Returns the width of the window
+
+                Parameters:
+                        None
+                Returns:
+                        (int): The width of the window
+        """
         return self.__width
 
-    # Name: set_width
-    # Parameters: (int) width
-    # Returns: None
-    # Description: Sets the width of the window
-    def set_width(self, width): 
+    def set_width(self, width):
+        """
+                Sets the width of the window
+                
+                Parameters:
+                        width (int): The new width of the window
+                Returns:
+                        None
+        """
         self.__width = width
         self.__window = curses.newwin(self.__height, self.__width, self.__y, self.__x)
 
-    # Name: get_height
-    # Parameters: None
-    # Returns: (int) height
-    # Description: Returns the height of the window
     def get_height(self):
+        """
+                Returns the height of the window
+
+                Parameters:
+                        None
+                Returns:
+                        (int): The height of the window
+        """
         return self.__height
 
-    # Name: set_height
-    # Parameters: (int) height
-    # Returns: None
-    # Description: Sets the height of the window
     def set_height(self, height):
+        """
+                Sets the height of the window
+
+                Parameters:
+                        height (int): The new height of the window
+                Returns:
+                        None
+        """
         self.__height = height
         self.__window = curses.newwin(self.__height, self.__width, self.__y, self.__x)
 
-    # Name: get_border
-    # Parameters: None
-    # Returns: (bool) border
-    # Description: Returns whether the window has a border
     def get_border(self):
+        """
+                Returns whether the window has a border
+
+                Parameters:
+                        None
+                Returns:
+                        (bool): Whether the window has a border
+        """
         return self.__border
 
-    # Name: set_border
-    # Parameters: (bool) border
-    # Returns: None
-    # Description: Sets whether the window has a border
     def set_border(self, border):
+        """
+                Sets whether the window has a border
+
+                Parameters:
+                        border (bool): Whether the window has a border
+                Returns:
+                        None
+        """
         self.__border = border
 
-    # Name: get_border_color
-    # Parameters: None
-    # Returns: (int) border_color
-    # Description: Returns the color of the border
     def add_entity(self, entity):
+        """
+                Adds an entity to the window
+                
+                Parameters:
+                        entity (Entity): The entity to be added
+                Returns:
+                        None
+        """
         self.__entities.append(entity)
 
-    # Name: set_border_color
-    # Parameters: (int) border_color
-    # Returns: None
-    # Description: Sets the color of the border
     def remove_entity(self, entity):
+        """
+                Removes an entity from the window
+
+                Parameters:
+                        entity (Entity): The entity to be removed
+                Returns:
+                        None
+        """
         self.__entities.remove(entity)
 
-    # Name: render
-    # Parameters: (cursses.window) stdscr
-    # Returns: None
-    # Description: Renders the window
     def render(self, stdscr):
+        """
+                Renders the window
+
+                Parameters:
+                        stdscr (curses.window): The window to render to
+                Returns:
+                        None
+        """
         if self.__border:
             self.__window.box()
         if self.__entities:
@@ -119,23 +184,45 @@ class Window:
                 entity.render(stdscr)
 
     def refresh(self):
+        """
+                Refreshes the window
+
+                Parameters:
+                        None
+                Returns:
+                        None
+        """
         self.__window.refresh()
 
 class Text_Window(Window):
-    # Name: __init__
-    # Parameters: (int) x, (int) y, (int) width, (int) height, (bool) border
-    # Returns: None
-    # Description: Constructor for Text_Window object
     def __init__(self, x=0, y=0, width=0, height=0, border=False, text=[], text_align="left"):
+        """
+                Constructor for the Text_Window object
+
+                Parameters:
+                        x (int): The x coordinate of the window
+                        y (int): The y coordinate of the window
+                        width (int): The width of the window
+                        height (int): The height of the window
+                        border (bool): Whether or not the window has a border
+                        text (list): The text to be displayed in the window
+                        text_align (string): The alignment of the text
+                Returns:
+                        None
+        """
         super().__init__(x, y, width, height, border)
         self.__text = text
         self.__text_align = text_align
 
-    # Name: render
-    # Parameters: (cursses.window) stdscr
-    # Returns: None
-    # Description: Renders the Text_Window
     def render(self, stdscr):
+        """
+                Renders the Text_Window
+
+                Parameters:
+                        stdscr (curses.window): The window to render to
+                Returns:
+                        None
+        """
         if self.__text_align == "left":
             for i in range(len(self.__text)):
                 stdscr.addstr(self.get_y() + i, self.get_x(), self.__text[i])
