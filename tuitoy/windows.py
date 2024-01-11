@@ -6,10 +6,6 @@ See end of file for extended copyright information
 import curses
 
 class Window:
-    # Name: __init__
-    # Parameters: (int) x, (int) y, (int) width, (int) height, (bool) border
-    # Returns: None
-    # Description: Constructor for Window object
     def __init__(self, x=0, y=0, width=0, height=0, border=False):
         """
                 Constructor for the Window object
@@ -223,16 +219,17 @@ class Text_Window(Window):
                 Returns:
                         None
         """
+        super().render(stdscr)
+        
         if self.__text_align == "left":
             for i in range(len(self.__text)):
-                stdscr.addstr(self.get_y() + i, self.get_x(), self.__text[i])
+                stdscr.addstr(super().get_y() + 1 + i, super().get_x() + 1, self.__text[i])
         elif self.__text_align == "center":
             for i in range(len(self.__text)):
-                stdscr.addstr(self.get_y() + i, self.get_x() + (self.get_width() - len(self.__text[i])) // 2, self.__text[i])
+                stdscr.addstr(super().get_y() + 1+ i, super().get_x() + (super().get_width() - len(self.__text[i])) // 2, self.__text[i])
         elif self.__text_align == "right":
             for i in range(len(self.__text)):
-                stdscr.addstr(self.get_y() + i, self.get_x() + self.get_width() - len(self.__text[i]), self.__text[i])
-        super().render(stdscr)
+                stdscr.addstr(super().get_y() + 1 + i, (super().get_x() + super().get_width() - len(self.__text[i])) - 1, self.__text[i])
 
 """
 Copyright (C) 2023 Austin Choi
